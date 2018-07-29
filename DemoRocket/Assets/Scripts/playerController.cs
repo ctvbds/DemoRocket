@@ -11,6 +11,7 @@ public class playerController : MonoBehaviour {
     public InputField tf_Y;
     public InputField tf_Z;
     public bool isClick;
+    public int value;
 
     [SerializeField]
     Vector3 vetocity = Vector3.zero;
@@ -24,6 +25,7 @@ public class playerController : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        value = 0;
         cam = Camera.main;
         //Button btn1 = runBtn.GetComponent<Button>();
         //runBtn.onClick.AddListener(TaskOnClick);
@@ -43,61 +45,68 @@ public class playerController : MonoBehaviour {
     {
         if (isClick == true)
         {
-            print("vo");
-            //move forward
-            if (Input.GetKey(KeyCode.W))
-            {
-                vetocity -= transform.forward * accelemation * Time.deltaTime;//new Vector2(0, 1 * Time.deltaTime);
-            }
+            //value = value + 2;
+            //Quaternion addRotate = Quaternion.identity;
+            ////rotX = 13 + value;
+            ////rotY = -1 + value;
+            ////rotZ = -14 + value;
+            //print(rotX);
+            //print(rotY);
+            //print(rotZ);
 
-            //rotate left
-            if (Input.GetKey(KeyCode.A))
-            {
-                transform.Rotate(new Vector3(0, 5 * accelemation * Time.deltaTime, 0));
-            }
-            //rotate right
-            if (Input.GetKey(KeyCode.X))
-            {
-                transform.Rotate(new Vector3(0, -5 * accelemation * Time.deltaTime, 0));
-            }
+            ////move forward
+            //if (Input.GetKey(KeyCode.W))
+            //{
+            //    vetocity -= transform.forward * accelemation * Time.deltaTime;//new Vector2(0, 1 * Time.deltaTime);
+            //}
+            ////rotate left
+            //if (Input.GetKey(KeyCode.A))
+            //{
+            //    transform.Rotate(new Vector3(0, 5 * accelemation * Time.deltaTime, 0));
+            //}
+            ////rotate right
+            //if (Input.GetKey(KeyCode.X))
+            //{
+            //    transform.Rotate(new Vector3(0, -5 * accelemation * Time.deltaTime, 0));
+            //}
 
 
-            //clamp velocity
-            vetocity = new Vector3(
-            Mathf.Clamp(vetocity.x, minVelocity, maxVelocity),
-            Mathf.Clamp(-vetocity.x, minVelocity, maxVelocity),
-            0);
-            //vetocity = Vector3.ClampMagnitude(vetocity, maxVelocity);
-            print(vetocity.x);
-            print(vetocity.y);
-            print(vetocity.z);
+            ////clamp velocity
+            //vetocity = new Vector3(
+            //Mathf.Clamp(vetocity.x, minVelocity, maxVelocity),
+            //Mathf.Clamp(-vetocity.x, minVelocity, maxVelocity),
+            //0);
+            ////vetocity = Vector3.ClampMagnitude(vetocity, maxVelocity);
+            //print(vetocity.x);
+            //print(vetocity.y);
+            //print(vetocity.z);
 
-            transform.position -= (vetocity * -0.75f);
+            //transform.position -= (vetocity * -0.75f);
        
-            //check if we'ar off screen and resolve
+            ////check if we'ar off screen and resolve
+            ////Vector3 screenPos = cam.WorldToViewportPoint(transform.position);
             //Vector3 screenPos = cam.WorldToViewportPoint(transform.position);
-            Vector3 screenPos = cam.WorldToViewportPoint(transform.position);
-            // set y
-            if (screenPos.y < 0)
-            {
-                screenPos.y = 1;
-            }
-            else if (screenPos.y > 1)
-            {
-                screenPos.y = 0;
-            }
-            //set x
-            if (screenPos.x < 0)
-            {
-                screenPos.x = 1;
-            }
-            else if (screenPos.x > 1)
-            {
-                screenPos.x = 0;
-            }
+            //// set y
+            //if (screenPos.y < 0)
+            //{
+            //    screenPos.y = 1;
+            //}
+            //else if (screenPos.y > 1)
+            //{
+            //    screenPos.y = 0;
+            //}
+            ////set x
+            //if (screenPos.x < 0)
+            //{
+            //    screenPos.x = 1;
+            //}
+            //else if (screenPos.x > 1)
+            //{
+            //    screenPos.x = 0;
+            //}
 
 
-            transform.position = cam.ViewportToWorldPoint(screenPos);
+            //transform.position = cam.ViewportToWorldPoint(screenPos);
         }
         else
         {
@@ -172,6 +181,36 @@ public class playerController : MonoBehaviour {
         tf_Z.text = "" + transform.position.z;
     }
 
+
+    public float rotY
+    {
+        get { return transform.rotation.eulerAngles.y; }
+        set
+        {
+            Vector3 v = transform.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(v.x, value, v.z);
+        }
+    }
+
+    public float rotX
+    {
+        get { return transform.rotation.eulerAngles.y; }
+        set
+        {
+            Vector3 v = transform.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(value, v.y, v.z);
+        }
+    }
+
+    public float rotZ
+    {
+        get { return transform.rotation.eulerAngles.y; }
+        set
+        {
+            Vector3 v = transform.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(v.x, v.y, value);
+        }
+    }
 
 }
 
